@@ -40,6 +40,12 @@ You need to edit your Asterisk configuration files to enable the following
     read=system,call,log,verbose,agent,user,config,dtmf,reporting,cdr,dialplan
     write=system,call,agent,user,config,command,reporting,originate
 
+##### Asterisk-1.8 and higher
+    [admin]
+    secret = test
+    read = system,call,log,verbose,command,agent,user,config,dtmf,reporting,cdr,dialplan,originate
+    write = system,call,log,verbose,command,agent,user,config,dtmf,reporting,cdr,dialplan,originate
+
 Make avaliable the ajam_cookie file/directory with read/write permission to http user
 
 
