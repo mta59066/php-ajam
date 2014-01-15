@@ -1,5 +1,63 @@
 <?php
 
+/*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
+Class to work with AJAM in Asterisk using PHP 5.x
+
+Details:
+
+You need to edit your Asterisk configuration files to enable the following
+
+In http.conf:
+	[general]
+	enabled = yes
+	prefix=asterisk
+	enablestatic = yes
+
+In manager.conf
+	[general]
+	enabled = yes
+	webenabled = yes
+
+In manager.conf create the manager user
+
+Asterisk-1.4.x
+	[admin]
+	secret = test
+	read = system,call,log,verbose,command,agent,user,config
+	write = system,call,log,verbose,command,agent,user,config
+
+Asterisk-1.6.x
+	[admin]
+	secret = test
+	read=system,call,log,verbose,agent,user,config,dtmf,reporting,cdr,dialplan
+	write=system,call,agent,user,config,command,reporting,originate
+
+Asterisk-1.8 and higher
+	[admin]
+	secret = test
+	read = system,call,log,verbose,command,agent,user,config,dtmf,reporting,cdr,dialplan,originate
+	write = system,call,log,verbose,command,agent,user,config,dtmf,reporting,cdr,dialplan,originate
+
+Make avaliable the ajam_cookie file/directory with read/write
+permission to http user
+
+License:
+	@since 26/01/2009
+	@author Carlos Alberto Cesario 
+	@package AJAM
+	@license http://www.gnu.org/copyleft/gpl.html GPL
+	@filesource
+	@access public
+
+Version History:
+	2009-01-26	version 0.2.1 by Carlos Alberto Cesario
+	2014-01-15	version 0.2.2 by lgaetz
+					forked from github project mta59066/php-ajam and license information added back
+					added test to $config_arr['debug'] to see if user set to false
+
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***/ 
+
+
 class Ajam
 {
 
@@ -136,7 +194,7 @@ class Ajam
 					die("Change permission to read/write in file: $this->_cookiefile");
 				}
 			}
-			if (isset($config_arr['debug'])) {
+			if (isset($config_arr['debug']) && $config_arr['debug'] != false) {
 				$this->_debug = true;
 			}
 		}
